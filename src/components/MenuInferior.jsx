@@ -1,38 +1,56 @@
-import { NavLink } from "react-router-dom"
+﻿import { NavLink } from "react-router-dom"
+import { Box, Button, Paper } from "@mui/material"
+import { RUTAS } from "../constants/rutas"
+
+const opciones = [
+  ["Inicio", RUTAS.INICIO],
+  ["Agregar", RUTAS.AGREGAR],
+  ["Inventario", RUTAS.INVENTARIO],
+  ["Tiendas", RUTAS.TIENDAS],
+  ["Contacto", RUTAS.CONTACTO]
+]
 
 function MenuInferior() {
-  const claseEnlace = ({ isActive }) =>
-    isActive
-      ? "menu-enlace activo"
-      : "menu-enlace"
-
   return (
-    <nav
-      className="menu-inferior"
-      aria-label="Navegación principal"
+    <Paper
+      component="nav"
+      sx={{
+        position: "fixed",
+        bottom: 0,
+        left: 0,
+        right: 0,
+        p: 1,
+        zIndex: 1000
+      }}
+      elevation={8}
     >
-      <NavLink
-        to="/"
-        end
-        className={claseEnlace}
+      <Box
+        sx={{
+          display: "flex",
+          justifyContent: "center",
+          flexWrap: "wrap",
+          gap: 1
+        }}
       >
-        Inicio
-      </NavLink>
-
-      <NavLink
-        to="/tiendas"
-        className={claseEnlace}
-      >
-        Nuestras tiendas
-      </NavLink>
-
-      <NavLink
-        to="/contacto"
-        className={claseEnlace}
-      >
-        Contáctanos
-      </NavLink>
-    </nav>
+        {opciones.map(([texto, ruta]) => (
+          <NavLink
+            key={ruta}
+            to={ruta}
+            end={ruta === "/"}
+            style={{ textDecoration: "none" }}
+          >
+            {({ isActive }) => (
+              <Button
+                color="success"
+                variant={isActive ? "contained" : "text"}
+              >
+                {texto}
+              </Button>
+            )}
+          </NavLink>
+        ))}
+      </Box>
+    </Paper>
   )
 }
 
